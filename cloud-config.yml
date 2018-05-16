@@ -1,0 +1,24 @@
+#cloud-config
+
+hostname: "coreos"
+coreos:
+  units:
+    - name: docker.service
+      command: start
+    - name: timezone.service
+      command: start
+      content: |
+        [Unit]
+        Description=timezone
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/ln -sf ../usr/share/zoneinfo/Japan /etc/localtime
+
+  
+users:
+  - name: "[username]"
+    passwd: [password_hash]
+    groups:
+      - "sudo"
+      - "docker"
