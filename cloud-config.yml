@@ -1,24 +1,13 @@
 #cloud-config
 
 hostname: "coreos"
-coreos:
-  units:
-    - name: docker.service
-      command: start
-    - name: timezone.service
-      command: start
-      content: |
-        [Unit]
-        Description=timezone
-        [Service]
-        Type=oneshot
-        RemainAfterExit=yes
-        ExecStart=/usr/bin/ln -sf ../usr/share/zoneinfo/Japan /etc/localtime
+ssh_authorized_keys:
+  - ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjKGMvAybyUTYpJc0M8pUjK4Y9Stef/Ac32sACyZgj085CUjOxk1toduFbM3S5lPGWDoupK4kBAV0c+2araB4I8yI47o6PBkRPcRWKtnpzamuo9ZlwhHcXTQ3MIZcKVN/fa24mIIivmHZAmdWXv3SHqiCmcdBvtDll8ks627nm5mL5R3+BLQFf8HG8MIGldeaJutIyoW3B9pm4kCc4uc2mUKcPFCx9aQvmWJr7D/T5WiCsaSd8zwo1FuqAvV1R7jCNesBWGJ2wqTOMhpXXENcNDccxRShbZyDEGp3WqxsZxnJ+oz3MzfY5GH6568/ERrBUyp90TtS3SuYX0+y4HvcB
 
-  
-users:
-  - name: "[username]"
-    passwd: [password_hash]
-    groups:
-      - "sudo"
-      - "docker"
+network:
+  interfaces:
+    eth0:
+      address: 192.168.30.10/24
+      gateway: 192.168.30.1/24
+      mtu: 1500
+      dhcp: false
